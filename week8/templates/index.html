@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% block body %}
+ <div class="row"><h3>Employee</h3></div>
+  <div class="row">
+    <div class="col-md-4">
+      {% with messages = get_flashed_messages()  %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+      <div class="card card-body">
+        <form action="{{url_for('add_employee')}}" method="POST">
+          <div class="form-group">
+            <input type="text" class="form-control" name="item" placeholder="Name">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="company" placeholder="company">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="qty" placeholder="Qty">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="city" placeholder="City">
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="price" placeholder="price">
+          </div>
+
+          <button class="btn btn-primary btn-block">
+            Save 
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <td>Code</td>
+            <td>Item</td>
+            <td>Company</td>
+            <td>Qty</td>
+            <td>City</td>
+            <td>price</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in datab %}
+          <tr>
+            <td>{{data.Code}}</td>
+            <td>{{data.Item}}</td>
+            <td>{{data.company}}</td>
+            <td>{{data.Qty}}</td>
+            <td>{{data.City}}</td>
+            <td>{{data.price}}</td>
+            <td width="130">
+              <a href="/edit/{{data.Code}}" class="btn btn-secondary btn-sm">edit</a>
+              <a href="/delete/{{data.Code}}" class="btn btn-danger btn-delete btn-sm">delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+{% endblock %}
