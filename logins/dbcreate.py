@@ -51,3 +51,5 @@ mycursor = mydb.cursor()
 
 # mycursor.executemany(sql,val)
 # mydb.commit()
+
+sql = "SELECT Customers.CustomerId Customers.Name Orders.orderId Orders.CustomerId Orders.OrderDate From Customers LEFT OUTER JOIN Orders ON Customers.CustomerId=Orders.CustomerId"

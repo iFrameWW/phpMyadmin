@@ -84,10 +84,10 @@ def register():
             msg = 'Please fill out the form!'
         else:
             # Account doesnt exists and the form data is valid, now insert new account into accounts table
-            cursor.execute('SELECT rkey,ID FROM roles')
-            keys = cursor.fetchone()
-            role=1
-            cursor.execute('INSERT INTO user_info VALUES (NULL, %s, %s, %s, %s, %s)', (name, email, username, password, role)) 
+            cursor.execute('SELECT ID FROM roles WHERE rkey=%s',{key})
+            rank = cursor.fetchone()
+            rankid = rank['ID']
+            cursor.execute('INSERT INTO user_info VALUES (NULL, %s, %s, %s, %s, %s)', (name, email, username, password, rankid)) 
             conn.commit()
    
             msg = 'You have successfully registered!'
@@ -139,24 +139,10 @@ def profile():
 def test():
         conn = mysql.connect()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
-        cursor.execute('SELECT rkey FROM roles')
-        val = cursor.fetchall()
-        cursor.execute('SELECT ID FROM roles')
-        ke = cursor.fetchall()
-        rv=[]
-        rk=[]
-        idrole={}
-        for i in val:
-            for v in i.values():
-                rv.append(v)
-        for i in ke:
-            for v in i.values():
-                rk.append(v)
-        for uk in rk:
-            for uv in rv:
-                idrole[uk] = uv
-                rv.remove(uv)
-        return render_template('test.html', test=idrole)
-  
+        key = 'WKNsvA8qk3'
+        cursor.execute('SELECT ID FROM roles WHERE rkey=%s',{key})
+        rank = cursor.fetchone()
+        ranik = rank['ID']
+        return render_template('test.html',test=ranik)
 if __name__ == '__main__':
     app.run(debug=True) 
